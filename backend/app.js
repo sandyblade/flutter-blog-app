@@ -1,7 +1,7 @@
 /**
- * This file is part of the Sandy Andryanto Company Profile Website.
+ * This file is part of the Sandy Andryanto Blog Application.
  *
- * @author     Sandy Andryanto <sandy.andryanto404@gmail.com>
+ * @author     Sandy Andryanto <sandy.andryanto.blade@gmail.com>
  * @copyright  2024
  *
  * For the full copyright and license information,
@@ -10,12 +10,11 @@
  */
 
 const express = require("express");
-const bodyParser = require("body-parser"); /* deprecated */
-const jwt = require('./helpers/jwt');
+const bodyParser = require("body-parser");
+const jwt = require('./src/utils/jwt');
 const cors = require("cors");
-const all_routes = require('express-list-endpoints');
 const app = express();
-var db = require("./models");
+const db = require("./src/models");
 
 app.use('*/uploads',express.static('uploads'));
 app.use(bodyParser.json());
@@ -26,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-require("./routes")(app);
+require("./src/routes")(app);
 
 app.get("/", (req, res) => {
   res.sendStatus(404);
@@ -35,7 +34,7 @@ app.get("/", (req, res) => {
 const PORT = process.env.APP_PORT || 8000;
 app.listen(PORT, () => {
   db.sequelize.sync();
-  console.log(all_routes(app))
+  console.log("Starting Application "+new Date().toString());
 });
 
 module.exports = app
