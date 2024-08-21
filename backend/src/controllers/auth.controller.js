@@ -13,6 +13,7 @@ const db = require("../models");
 const User = db.User;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const faker = require("faker");
 
 async function login(req, res) {
 
@@ -125,12 +126,12 @@ async function register(req, res) {
         return;
     }
 
-    let confirmToken = btoa(bcrypt.hashSync(email, 10))
+    let confirmToken = faker.datatype.uuid()
     let formUser = {
         email: email,
         password: bcrypt.hashSync(password, 10),
         confirmToken: confirmToken,
-        status: 0,
+        confirmed: 0,
         created_at: new Date(),
         updated_at: new Date()
     }
@@ -139,7 +140,10 @@ async function register(req, res) {
 
     res.status(200).send({
         data: {
-            user: createUser,
+            user: {
+                id: createUser.id,
+                email: createUser.email
+            },
             token: confirmToken
         },
         status: true,
@@ -210,7 +214,7 @@ async function forgotPassword(req, res) {
         return;
     }
 
-    let resetToken = btoa(bcrypt.hashSync(email, 10))
+    let resetToken = faker.datatype.uuid()
     let formUpdate = {
         confirmed: 1,
         resetToken: resetToken,
@@ -226,7 +230,7 @@ async function forgotPassword(req, res) {
     })
 
     res.status(200).send({
-        data: resetToken,
+        data: { token: resetToken },
         status: true,
         message: "We have e-mailed your password reset link!"
     });

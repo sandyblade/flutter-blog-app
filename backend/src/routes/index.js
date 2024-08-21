@@ -11,6 +11,7 @@
 
 const appRouter = require('express').Router();
 const authController = require("../controllers/auth.controller.js");
+const accountController = require("../controllers/account.controller.js");
 const multer = require('multer')
 const path = require('path')
 const storage = multer.diskStorage({
@@ -32,6 +33,12 @@ appRouter.post('/auth/register', authController.register);
 appRouter.get('/auth/confirm/:token', authController.confirm);
 appRouter.post('/auth/email/forgot', authController.forgotPassword);
 appRouter.post('/auth/email/reset/:token', authController.resetPassword);
+
+// User account Pages
+appRouter.get('/account/detail', accountController.detail);
+appRouter.post('/account/upload', upload.single('file_image'), accountController.upload);
+appRouter.post('/account/update', accountController.update);
+appRouter.post('/account/password', accountController.password);
 
 module.exports = app => {
     app.use('/api', [appRouter]);

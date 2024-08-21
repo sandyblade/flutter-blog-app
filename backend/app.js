@@ -15,6 +15,7 @@ const jwt = require('./src/utils/jwt');
 const cors = require("cors");
 const app = express();
 const db = require("./src/models");
+const PORT = process.env.APP_PORT || 8000;
 
 app.use('*/uploads',express.static('uploads'));
 app.use(bodyParser.json());
@@ -31,7 +32,8 @@ app.get("/", (req, res) => {
   res.sendStatus(404);
 });
 
-const PORT = process.env.APP_PORT || 8000;
+
+
 app.listen(PORT, () => {
   db.sequelize.sync();
   console.log("Starting Application "+new Date().toString());

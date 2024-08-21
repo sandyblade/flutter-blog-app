@@ -1,7 +1,7 @@
 /**
- * This file is part of the Sandy Andryanto Blog Application.
+ * This file is part of the Sandy Andryanto Company Profile Website.
  *
- * @author     Sandy Andryanto <sandy.andryanto.blade@gmail.com>
+ * @author     Sandy Andryanto <sandy.andryanto.dev@gmail.com>
  * @copyright  2024
  *
  * For the full copyright and license information,
@@ -26,9 +26,15 @@ function jwt() {
         algorithms: ['HS256']
     }).unless({
         path: [
+            // public routes that don't require authentication
+            '/',
+            '/api-docs',
             '/api/auth/login',
             '/api/auth/register',
             '/api/auth/email/forgot',
+            /^\/api\/article\/.*/,
+            /^\/api\/auth\/confirm\/.*/,
+            /^\/api\/auth\/email\/reset\/.*/,
             /^\/uploads\/.*/
         ]
     });

@@ -33,7 +33,6 @@ async function createUser() {
     instagram: faker.internet.userName(),
     twitter: faker.internet.userName(),
     linked_in: faker.internet.userName(),
-    confirm_token: faker.datatype.uuid(),
     confirmed: 1,
     created_at: new Date(),
     updated_at: new Date(),
