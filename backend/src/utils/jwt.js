@@ -30,7 +30,7 @@ function jwt() {
             '/api/auth/login',
             '/api/auth/register',
             '/api/auth/email/forgot',
-            /^\/api\/article\/.*/,
+            '/api/article/list',
             /^\/api\/auth\/confirm\/.*/,
             /^\/api\/auth\/email\/reset\/.*/,
             /^\/uploads\/.*/

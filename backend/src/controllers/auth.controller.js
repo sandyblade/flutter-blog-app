@@ -11,6 +11,7 @@
 
 const db = require("../models");
 const User = db.User;
+const Activity = db.Activity
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const faker = require("faker");
@@ -69,6 +70,13 @@ async function login(req, res) {
         ...omitPassword(user),
         token
     });
+
+    await Activity.create({
+        userId: user.id,
+        event: "Sign In",
+        description: "Sign in to application"
+    });
+
     return;
 }
 
@@ -149,6 +157,13 @@ async function register(req, res) {
         status: true,
         message: "You need to confirm your account. We have sent you an activation code, please check your email."
     });
+
+    await Activity.create({
+        userId: createUser.id,
+        event: "Sign Up",
+        description: "Register new user account"
+    });
+
     return;
 
 }
@@ -187,6 +202,13 @@ async function confirm(req, res) {
         status: true,
         message: "Your e-mail is verified. You can now login."
     });
+
+    await Activity.create({
+        userId: user.id,
+        event: "Email Verification",
+        description: "Confirm new member registration account"
+    });
+
     return;
 
 }
@@ -234,6 +256,13 @@ async function forgotPassword(req, res) {
         status: true,
         message: "We have e-mailed your password reset link!"
     });
+
+    await Activity.create({
+        userId: user.id,
+        event: "Forgot Password",
+        description: "Request reset password link"
+    });
+
     return;
 
 }
@@ -312,6 +341,13 @@ async function resetPassword(req, res) {
         status: true,
         message: "Your password has been reset!"
     });
+
+    await Activity.create({
+        userId: findUserByEmail.id,
+        event: "Reset Password",
+        description: "Reset account password"
+    });
+
     return;
 
 }

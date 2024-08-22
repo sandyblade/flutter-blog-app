@@ -36,6 +36,15 @@ module.exports = (sequelize, DataTypes) => {
         field: "last_name",
         type: DataTypes.STRING,
       },
+      fullName: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+        set(value) {
+          throw new Error('Do not try to set the `fullName` value!');
+        },
+      },
       gender: DataTypes.STRING,
       country: DataTypes.STRING,
       facebook: DataTypes.STRING,

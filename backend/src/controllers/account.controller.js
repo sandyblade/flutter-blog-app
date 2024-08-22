@@ -12,17 +12,68 @@
 const auth_user = require('../utils/auth_user');
 const db = require("../models");
 const User = db.User;
+const Activity = db.Activity
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { Op } = require("sequelize");
 
 
+async function token(req, res) {
+    let user = await auth_user(req)
+    let token = jwt.sign({
+        sub: user.id
+    }, process.env.JWT_SECRET_KEY, {
+        expiresIn: '1d'
+    });
+    res.send({
+        ...omitPassword(user),
+        token
+    });
+
+    await Activity.create({
+        userId: user.id,
+        event: "Refresh Token",
+        description: "Generate new access token"
+    });
+
+    return;
+}
+
+async function activity(req, res) {
+    let user = await auth_user(req)
+    let page = req.query.page || 1;
+    let limit = req.query.limit || 10;
+    let total = await Activity.count({ where: { user_id: user.id } });
+    let offset = ((page-1)*limit)
+    let order_by = req.query.order || "id"
+    let order_dir = req.query.dir || "desc"
+    let searchValue = req.query.search || ""
+    let searchData = [ { event: { [Op.like]: `%${searchValue}%` } }, { description: { [Op.like]: `%${searchValue}%` } }]
+    let list  = await Activity.findAll({
+        where: { user_id: user.id, [Op.or]: searchData },
+        offset: offset,
+        limit: limit,
+        order: [[order_by, order_dir]],
+    })
+
+    res.status(200).send({
+        data: { 
+            list: list, 
+            total: total 
+        },
+        status: true,
+        message: "ok"
+    });
+    return;
+}
 
 async function detail(req, res) {
     let user = await auth_user(req)
     res.status(200).send({
         data: user,
         status: true,
-        message: ""
+        message: "ok"
     });
     return;
 }
@@ -94,6 +145,13 @@ async function password(req, res) {
         status: true,
         message: "Your password has been changed!!"
     });
+
+    await Activity.create({
+        userId: user.id,
+        event: "Change Password",
+        description: "Change new password account"
+    });
+
     return;
 
 }
@@ -184,6 +242,13 @@ async function update(req, res) {
         status: true,
         message: "Your profile has been changed"
     });
+
+    await Activity.create({
+        userId: user.id,
+        event: "Update Profile",
+        description: "Edit user profile account"
+    });
+
     return;
 }
 
@@ -220,6 +285,12 @@ async function upload(req, res) {
             }
         })
 
+        await Activity.create({
+            userId: user.id,
+            event: "Upload Image",
+            description: "Upload new user profile image"
+        });
+
         res.status(200).send({
             data: {
                 image: fileUrl
@@ -229,6 +300,13 @@ async function upload(req, res) {
         });
 
     } else {
+
+        await Activity.create({
+            userId: user.id,
+            event: "Upload Image",
+            description: "Upload new user profile image"
+        });
+
         res.status(200).send({
             data: {
                 image: user.image
@@ -236,6 +314,8 @@ async function upload(req, res) {
             status: true,
             message: "Your profile image has been changed"
         });
+
+        
     }
 }
 
@@ -253,9 +333,20 @@ async function getAppPath() {
     }
   }
 
+function omitPassword(user) {
+    const {
+        password,
+        ...userWithoutPassword
+    } = user;
+    let result = userWithoutPassword;
+    console.log(result)
+}
+
 module.exports = {
     detail,
     upload,
     update,
-    password
+    password,
+    token,
+    activity
 }

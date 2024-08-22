@@ -47,6 +47,22 @@ module.exports = {
           type: Sequelize.TEXT("long"),
           allowNull: true,
         },
+        categories: {
+          type: Sequelize.TEXT("long"),
+          allowNull: true,
+        },
+        tags: {
+          type: Sequelize.TEXT("long"),
+          allowNull: true,
+        },
+        total_viewer: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+        },
+        total_comment: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+        },
         status: {
           type: Sequelize.TINYINT,
           defaultValue: 0,
@@ -64,6 +80,8 @@ module.exports = {
       .then(() => queryInterface.addIndex("articles", ["image"]))
       .then(() => queryInterface.addIndex("articles", ["title"]))
       .then(() => queryInterface.addIndex("articles", ["slug"]))
+      .then(() => queryInterface.addIndex("articles", ["total_viewer"]))
+      .then(() => queryInterface.addIndex("articles", ["total_comment"]))
       .then(() => queryInterface.addIndex("articles", ["description"]))
       .then(() => queryInterface.addIndex("articles", ["status"]))
       .then(() => queryInterface.addIndex("articles", ["created_at"]))
@@ -103,40 +121,11 @@ module.exports = {
       .then(() => queryInterface.addIndex('viewers', ['updated_at']))
       ;
 
-      await queryInterface.createTable('articles_categories', {
-        article_id: {
-          type: Sequelize.BIGINT.UNSIGNED,
-          primaryKey: true,
-        },
-        category_id: {
-          type: Sequelize.BIGINT.UNSIGNED,
-          primaryKey: true,
-        },
-      })
-        .then(() => queryInterface.addIndex('articles_categories', ['article_id']))
-        .then(() => queryInterface.addIndex('articles_categories', ['category_id']))
-       ;
-
-      await queryInterface.createTable('articles_tags', {
-        article_id: {
-          type: Sequelize.BIGINT.UNSIGNED,
-          primaryKey: true,
-        },
-        tag_id: {
-          type: Sequelize.BIGINT.UNSIGNED,
-          primaryKey: true,
-        },
-      })
-        .then(() => queryInterface.addIndex('articles_tags', ['article_id']))
-        .then(() => queryInterface.addIndex('articles_tags', ['tag_id']))
-        ;
 
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("viewers");
-    await queryInterface.dropTable("articles_categories");
-    await queryInterface.dropTable("articles_tags");
     await queryInterface.dropTable("articles");
   },
 };

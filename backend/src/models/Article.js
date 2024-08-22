@@ -33,6 +33,28 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       description: DataTypes.STRING,
       content: DataTypes.STRING,
+      categories: DataTypes.STRING,
+      tags: DataTypes.STRING,
+      json_categories: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return JSON.parse(this.categories);
+        },
+        set(value) {
+          throw new Error('Do not try to set the `fullName` value!');
+        },
+      },
+      json_tags: {
+        type: DataTypes.VIRTUAL,
+        get() {
+          return JSON.parse(this.tags);
+        },
+        set(value) {
+          throw new Error('Do not try to set the `fullName` value!');
+        },
+      },
+      total_viewer: DataTypes.INTEGER,
+      total_comment: DataTypes.INTEGER,
       status: DataTypes.INTEGER,
       createdAt: {
         field: "created_at",
