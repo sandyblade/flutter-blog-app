@@ -16,6 +16,7 @@ const User = db.User;
 const Viewer = db.Viewer;
 const Article = db.Article;
 const Activity = db.Activity
+const Notification = db.Notification
 const faker = require("faker");
 const { Op } = require("sequelize");
 const userExclude = [
@@ -120,7 +121,18 @@ async function list(req, res) {
 async function read(req, res) {
 
     let slug = req.params.slug;
-    let article = await Article.findOne({ where: { slug: slug } });
+
+    User.hasMany(Article, {foreignKey: 'user_id'})
+       
+    Article.belongsTo(User, {foreignKey: 'user_id'})
+
+    let article = await Article.findOne({
+        include: [{
+            model: User,
+            attributes: { exclude: userExclude }
+        }],
+        where: { slug: slug } 
+    });
 
     if(!article){
         res.status(400).send({
@@ -128,6 +140,34 @@ async function read(req, res) {
         });
         return;
     }
+
+    let session = await auth_user(req)
+    if(session !== undefined){
+        let viewer = await Viewer.findOne({ where: { userId: session.id, articleId: article.id } });
+        if(!viewer){
+            await Viewer.create({
+                userId: session.id, 
+                articleId: article.id,
+                status: 0
+            });
+            let total_viewer = await Viewer.count({ where: { articleId: article.id } });
+            await Article.update({ total_viewer: total_viewer }, { where: { id : article.id } }) 
+            await Notification.create({
+                userId: article.userId,
+                subject: "Read Article",
+                message: "The user "+session.email+" add read your article with title `"+article.title+"`.",
+                status: 0
+            })
+        }
+    }
+
+    article = await Article.findOne({
+        include: [{
+            model: User,
+            attributes: { exclude: userExclude }
+        }],
+        where: { slug: slug } 
+    });
 
     res.status(200).send({
         data: article,
@@ -371,6 +411,25 @@ async function words(req, res) {
 
 }
 
+async function upload(req, res) {
+    if (req.file) {
+        let file = req.file
+        let fileUrl = file.destination + "" + file.filename
+        res.status(200).send({
+            data: {
+                image: fileUrl
+            },
+            status: true,
+            message: "Your upload file has been successfully !!"
+        });
+    } else {
+        res.status(400).send({
+            message: "The file input is empty!"
+        });
+        return;
+    }
+}
+
 module.exports = {
     list,
     user,
@@ -378,5 +437,6 @@ module.exports = {
     remove,
     create,
     update,
-    words
+    words,
+    upload
 }

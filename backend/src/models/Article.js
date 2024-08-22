@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       json_categories: {
         type: DataTypes.VIRTUAL,
         get() {
-          return JSON.parse(this.categories);
+          return this.categories ? JSON.parse(this.categories) : [];
         },
         set(value) {
           throw new Error('Do not try to set the `fullName` value!');
@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       json_tags: {
         type: DataTypes.VIRTUAL,
         get() {
-          return JSON.parse(this.tags);
+          return this.tags ? JSON.parse(this.tags) : [];
         },
         set(value) {
           throw new Error('Do not try to set the `fullName` value!');

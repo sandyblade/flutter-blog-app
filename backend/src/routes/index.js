@@ -14,6 +14,7 @@ const authController = require("../controllers/auth.controller.js");
 const accountController = require("../controllers/account.controller.js");
 const notificationController = require("../controllers/notification.controller.js");
 const articleController = require("../controllers/article.controller.js");
+const commentController = require("../controllers/comment.controller.js");
 const multer = require('multer')
 const path = require('path')
 const storage = multer.diskStorage({
@@ -54,6 +55,12 @@ appRouter.get('/article/read/:slug', articleController.read);
 appRouter.delete('/article/remove/:id', articleController.remove);
 appRouter.post('/article/create', articleController.create);
 appRouter.put('/article/update/:id', articleController.update);
+appRouter.post('/article/upload', upload.single('file_image'), articleController.upload);
+
+// Comment
+appRouter.get('/comment/list/:id', commentController.list);
+appRouter.post('/comment/create/:id', commentController.create);
+appRouter.delete('/comment/remove/:id', commentController.remove);
 
 module.exports = app => {
     app.use('/api', [appRouter]);

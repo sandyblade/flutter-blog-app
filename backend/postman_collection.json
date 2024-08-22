@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail002.com\",\r\n    \"password\":\"P@ssw0rd!123\"\r\n}",
+							"raw": "{\r\n    \"email\":\"vita.langosh@gmail.com\",\r\n    \"password\":\"P@ssw0rd!123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -43,7 +43,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail002.com\",\r\n    \"password\":\"P@ssw0rd!123\",\r\n    \"password_confirm\":\"P@ssw0rd!123\"\r\n}",
+							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail003.com\",\r\n    \"password\":\"P@ssw0rd!123\",\r\n    \"password_confirm\":\"P@ssw0rd!123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -69,14 +69,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}api/auth/confirm/ee71cf3e-a5fa-4fd5-a3b6-60ef4414f981",
+							"raw": "{{baseURL}}api/auth/confirm/4bb791dd-162a-4a3e-a62f-847c71ccbbb7",
 							"host": [
 								"{{baseURL}}api"
 							],
 							"path": [
 								"auth",
 								"confirm",
-								"ee71cf3e-a5fa-4fd5-a3b6-60ef4414f981"
+								"4bb791dd-162a-4a3e-a62f-847c71ccbbb7"
 							]
 						}
 					},
@@ -89,7 +89,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail002.com\"\r\n}",
+							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail003.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -117,7 +117,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail002.com\",\r\n    \"password\":\"P@ssw0rd!123\",\r\n    \"password_confirm\":\"P@ssw0rd!123\"\r\n}",
+							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail003.com\",\r\n    \"password\":\"P@ssw0rd!123\",\r\n    \"password_confirm\":\"P@ssw0rd!123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -125,7 +125,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}api/auth/email/reset/d23dd9f0-a1e1-4dd0-bd90-040b897dee44",
+							"raw": "{{baseURL}}api/auth/email/reset/76d30c27-23e1-412c-aa98-ba7f692bb4b3",
 							"host": [
 								"{{baseURL}}api"
 							],
@@ -133,7 +133,7 @@
 								"auth",
 								"email",
 								"reset",
-								"d23dd9f0-a1e1-4dd0-bd90-040b897dee44"
+								"76d30c27-23e1-412c-aa98-ba7f692bb4b3"
 							]
 						}
 					},
@@ -243,6 +243,348 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Referesh Token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/account/token",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"account",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/account/activity",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"account",
+								"activity"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notification",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/notification/list?search=",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"notification",
+								"list"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/notification/read/1",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"notification",
+								"read",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/notification/remove/2",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"notification",
+								"remove",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Article",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/article/list",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"article",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"What is Lorem Ipsum ? (Part 3)\",\r\n    \"description\":\"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s\",\r\n    \"content\":\"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\r\n    \"status\": 1,\r\n    \"categories\":[\"Sport\",\"News\",\"Technology\",\"Culinary\",\"Politic\",\"Economic\"],\r\n    \"tags\":[\"Favorite\",\"Hot News\",\"Best Seller\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/article/create",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"article",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/article/read/What-is-Lorem-Ipsum-(Part-2)",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"article",
+								"read",
+								"What-is-Lorem-Ipsum-(Part-2)"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"What is Lorem Ipsum ? (Part 2)\",\r\n    \"description\":\"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s\",\r\n    \"content\":\"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\",\r\n    \"status\": 1,\r\n    \"categories\":[\"Sport\",\"News\",\"Technology\",\"Culinary\",\"Politic\",\"Economic\"],\r\n    \"tags\":[\"Favorite\",\"Hot News\",\"Best Seller\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/article/update/3",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"article",
+								"update",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/article/remove/2",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"article",
+								"remove",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/article/user",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"article",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Words",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/article/words?max=1000",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"article",
+								"words"
+							],
+							"query": [
+								{
+									"key": "max",
+									"value": "1000"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/article/upload",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"article",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/comment/list/2",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"comment",
+								"list",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"comment\":\"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/comment/create/2",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"comment",
+								"create",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		}
@@ -252,7 +594,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQzLCJpYXQiOjE3MjQyOTkyMzIsImV4cCI6MTcyNDM4NTYzMn0.pCs_yg47rRgt_10HAvQepZMZI7h7HWIpwZrMQbOH7Vc",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlhdCI6MTcyNDMxNjU1MCwiZXhwIjoxNzI0NDAyOTUwfQ.NjYwrXUsTYnX8X8iAj4DeGz2gr9IEBOrndN-r6vFuaw",
 				"type": "string"
 			}
 		]
