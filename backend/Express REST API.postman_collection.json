@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "2223dc25-7d6e-4f7e-bf07-58142b48db05",
+		"name": "Express REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17401019"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail002.com\",\r\n    \"password\":\"P@ssw0rd!123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/auth/login",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail002.com\",\r\n    \"password\":\"P@ssw0rd!123\",\r\n    \"password_confirm\":\"P@ssw0rd!123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/auth/register",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirmation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/auth/confirm/ee71cf3e-a5fa-4fd5-a3b6-60ef4414f981",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"auth",
+								"confirm",
+								"ee71cf3e-a5fa-4fd5-a3b6-60ef4414f981"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail002.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/auth/email/forgot",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"auth",
+								"email",
+								"forgot"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"sandyandryanto@gmail002.com\",\r\n    \"password\":\"P@ssw0rd!123\",\r\n    \"password_confirm\":\"P@ssw0rd!123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/auth/email/reset/d23dd9f0-a1e1-4dd0-bd90-040b897dee44",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"auth",
+								"email",
+								"reset",
+								"d23dd9f0-a1e1-4dd0-bd90-040b897dee44"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Account",
+			"item": [
+				{
+					"name": "User Profile Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}api/account/detail",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"account",
+								"detail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Profile Update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"sandyandryanto@gmail002.com\",\r\n    \"phone\": 9568599,\r\n    \"firstName\": \"Sandy\",\r\n    \"lastName\": \"Andryanto\",\r\n    \"gender\": \"M\",\r\n    \"country\": \"Indonesia\",\r\n    \"facebook\": \"andryantz\",\r\n    \"instagram\": \"sandyandryanto\",\r\n    \"twitter\": \"sandyandryanto\",\r\n    \"linkedIn\": \"sand404\",\r\n    \"address\": \"Cimahi\",\r\n    \"jobTitle\": \"Software Engineer\",\r\n    \"aboutMe\": \"Please Hire Me..\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/account/update",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"account",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change User Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"current_password\":\"P@ssw0rd!123\",\r\n    \"password\":\"P@ssw0rd!123\",\r\n    \"password_confirmation\":\"P@ssw0rd!123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}api/account/password",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"account",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload User Profile Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file_image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}api/account/upload",
+							"host": [
+								"{{baseURL}}api"
+							],
+							"path": [
+								"account",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQzLCJpYXQiOjE3MjQyOTkyMzIsImV4cCI6MTcyNDM4NTYzMn0.pCs_yg47rRgt_10HAvQepZMZI7h7HWIpwZrMQbOH7Vc",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8000/",
+			"type": "string"
+		}
+	]
+}
