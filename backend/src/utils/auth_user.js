@@ -16,9 +16,11 @@ const User = db.User;
 async function auth_user(req) {
     const bearerHeader = req.headers['authorization'];
     if (typeof bearerHeader !== 'undefined') {
+        
         let user_id;
         const bearer = bearerHeader.split(' ');
         const bearerToken = bearer[1];
+
         jwt.verify(bearerToken, process.env.JWT_SECRET_KEY, (err, authData) => {
             if (err) {
                 console.log(err);
@@ -27,11 +29,18 @@ async function auth_user(req) {
                 user_id = authData["sub"]
             }
         })
-        return await User.findOne({
-            where: {
-                id: user_id
-            }
-        })
+
+        if(user_id !== undefined){
+            return await User.findOne({
+                attributes: {
+                    exclude: ["password", "resetToken", "confirmToken", "confirmed"],
+                },
+                where: {
+                    id: user_id
+                }
+            })
+        }
+
     }
     return undefined
 }

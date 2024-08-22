@@ -296,6 +296,7 @@ async function resetPassword(req, res) {
     }
 
     let formUpdate = {
+        resetToken: null,
         password: bcrypt.hashSync(password, 10),
         updated_at: new Date()
     }

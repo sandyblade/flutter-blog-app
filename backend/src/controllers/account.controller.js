@@ -15,6 +15,8 @@ const User = db.User;
 const fs = require('fs');
 const bcrypt = require('bcryptjs');
 
+
+
 async function detail(req, res) {
     let user = await auth_user(req)
     res.status(200).send({
@@ -48,7 +50,9 @@ async function password(req, res) {
         return;
     }
 
-    let user = await auth_user(req)
+
+    let session = await auth_user(req)
+    let user = await User.findOne({ where: { id: session.id } })
     let current_password = req.body.current_password;
     let password = req.body.password;
     let password_confirmation = req.body.password_confirmation;
@@ -106,17 +110,18 @@ async function update(req, res) {
     let user = await auth_user(req)
     let email = req.body.email;
     let phone = req.body.phone;
-    let first_name = req.body.first_name;
-    let last_name = req.body.last_name;
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
     let gender = req.body.gender;
     let country = req.body.country;
     let address = req.body.address;
     let about_me = req.body.about_me;
-    let job_title = req.body.job_title;
+    let jobTitle = req.body.jobTitle;
     let facebook = req.body.facebook;
     let twitter = req.body.twitter;
     let instagram = req.body.instagram;
-    let linked_in = req.body.linked_in;
+    let linkedIn = req.body.linkedIn;
+    let aboutMe = req.body.aboutMe;
 
     let findUserByEmail = await User.findOne({
         where: {
@@ -151,16 +156,18 @@ async function update(req, res) {
     let updateUser = {
         email: email,
         phone: phone,
-        first_name: first_name,
-        last_name: last_name,
+        firstName: firstName,
+        lastName: lastName,
         gender: gender,
         country: country,
         address: address,
         about_me: about_me,
-        job_title: job_title,
+        jobTitle: jobTitle,
         facebook: facebook,
         instagram: instagram,
-        linked_in: linked_in,
+        linkedIn: linkedIn,
+        twitter: twitter,
+        aboutMe: aboutMe,
         updated_at: new Date()
     }
 
@@ -187,16 +194,20 @@ async function upload(req, res) {
     let user = await auth_user(req)
     if (req.file) {
 
+        let app_path = await getAppPath();
+
         if (user.image) {
             let imageExists = user.image
-            let fileUrls = imageExists.split(".");
-            let fileImage = fileUrls[0]
-            fs.unlink('./' + fileImage, function (err) {
-                if (err) {
-                    console.log(err)
-                }
-            })
+            let fileUpload = app_path+'/' + imageExists
+            if (fs.existsSync(fileUpload)) {
+                fs.unlink(app_path+'/' + imageExists, function (err) {
+                    if (err) {
+                        console.log(err)
+                    }
+                })
+            }
         }
+
 
         let file = req.file
         let fileUrl = file.destination + "" + file.filename
@@ -227,6 +238,20 @@ async function upload(req, res) {
         });
     }
 }
+
+async function getAppPath() {
+    const { dirname } = require('path');
+    const { constants, promises: { access } } = require('fs');
+    
+    for (let path of module.paths) {
+      try {
+        await access(path, constants.F_OK);
+        return dirname(path);
+      } catch (e) {
+        // Just move on to next path
+      }
+    }
+  }
 
 module.exports = {
     detail,

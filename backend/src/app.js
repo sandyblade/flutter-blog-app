@@ -11,11 +11,13 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const jwt = require('./src/utils/jwt');
+const jwt = require('./utils/jwt');
 const cors = require("cors");
 const app = express();
-const db = require("./src/models");
+const db = require("./models");
 const PORT = process.env.APP_PORT || 8000;
+const fs = require('fs');
+const dir = './uploads';
 
 app.use('*/uploads',express.static('uploads'));
 app.use(bodyParser.json());
@@ -26,16 +28,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-require("./src/routes")(app);
+require("./routes")(app);
 
 app.get("/", (req, res) => {
   res.sendStatus(404);
 });
 
-
+app.use(function(err, req, res, next) {
+  if(err.status !== undefined && err.status != 200)
+    res.status(err.status).send({error : err.message});
+})
 
 app.listen(PORT, () => {
   db.sequelize.sync();
+  if (!fs.existsSync(dir)){
+       fs.mkdirSync(dir);
+  }
   console.log("Starting Application "+new Date().toString());
 });
 

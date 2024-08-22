@@ -26,9 +26,7 @@ function jwt() {
         algorithms: ['HS256']
     }).unless({
         path: [
-            // public routes that don't require authentication
             '/',
-            '/api-docs',
             '/api/auth/login',
             '/api/auth/register',
             '/api/auth/email/forgot',

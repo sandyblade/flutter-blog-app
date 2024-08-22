@@ -19,13 +19,10 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
+        cb(null, Date.now() + path.extname(file.originalname)) 
     }
 })
-
-const upload = multer({
-    storage: storage
-});
+const upload = multer({  storage: storage });
 
 // Auth Pages
 appRouter.post('/auth/login', authController.login);

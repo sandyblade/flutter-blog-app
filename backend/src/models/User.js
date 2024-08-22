@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       aboutMe: {
         field: "about_me",
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
       },
       resetToken: {
         field: "reset_token",
