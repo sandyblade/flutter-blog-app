@@ -11,51 +11,44 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const { createServer } = require('node:http');
 const jwt = require('./utils/jwt');
 const cors = require("cors");
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
 const db = require("./models");
-const { Server } = require('socket.io');
 const PORT = process.env.APP_PORT || 8000;
-const server = createServer(app);
-const io = new Server(server);
-
 const fs = require('fs');
 const dir = './uploads';
-
-// Add headers before the routes are defined
-app.use(function (req, res, next) {
-
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*'); //LINE 5
-
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-
-  // Pass to next layer of middleware
-  next();
-});
+const socketHandler = require("./controllers/socket.controller.js")
 
 app.use('*/uploads',express.static('uploads'));
 app.use(bodyParser.json());
+app.use(cors());
 app.use(jwt());
-app.use(
-  cors({
-    origin: ['http://localhost:5000', 'http://127.0.0.1:5000']
-  })
-);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 require("./routes")(app);
+
+io.on('connection', function(socket){
+  console.log('A user connected');
+
+  socket.on('/notification/call', async (data) => {
+    const response = await socketHandler.notification(data)
+    socket.emit('/notification/list', response);
+  });
+  
+  //Whenever someone disconnects this piece of code executed
+  socket.on('disconnect', function () {
+     console.log('A user disconnected');
+  });
+
+});
 
 app.get("/", (req, res) => {
   res.sendStatus(404);
@@ -66,7 +59,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status).send({error : err.message});
 })
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   db.sequelize.sync();
   if (!fs.existsSync(dir)){
       fs.mkdirSync(dir);
@@ -74,10 +67,6 @@ app.listen(PORT, () => {
   console.log("Starting Application "+new Date().toString());
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
 
-io.listen(8080);
 
 module.exports = app
