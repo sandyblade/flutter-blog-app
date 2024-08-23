@@ -53,6 +53,7 @@ async function create(req, res) {
     let article_id = req.params.id;
     let user = await auth_user(req)
 
+
     if (!req.body.comment) {
         res.status(400).send({
             message: "The field comment can not be empty!"
@@ -98,6 +99,14 @@ async function create(req, res) {
     })
 
     await Article.update({ total_comment: total_comment }, { where: { id : article.id } }) 
+
+    if(req.app.get('io')){
+        let bearerHeader = req.headers['authorization'];
+        let bearer = bearerHeader.split(' ');
+        let bearerToken = bearer[1];
+        req.app.get('io').sockets.emit('notification/call', bearerToken);
+        req.app.get('io').sockets.emit('comment/article/call', article.slug);
+    }
 
     res.status(200).send({
         data: comment,

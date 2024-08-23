@@ -38,9 +38,14 @@ require("./routes")(app);
 io.on('connection', function(socket){
   console.log('A user connected');
 
-  socket.on('/notification/call', async (data) => {
-    const response = await socketHandler.notification(data)
+  socket.on('/notification/call', async (token) => {
+    const response = await socketHandler.notification(token)
     socket.emit('/notification/list', response);
+  });
+
+  socket.on('/comment/article/call', async (slug) => {
+    const response = await socketHandler.comment(slug)
+    socket.emit('/comment/article/list', response);
   });
   
   //Whenever someone disconnects this piece of code executed
@@ -67,6 +72,6 @@ server.listen(PORT, () => {
   console.log("Starting Application "+new Date().toString());
 });
 
-
+app.set('io', io);
 
 module.exports = app

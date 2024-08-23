@@ -36,7 +36,6 @@ function jwt() {
             /^\/api\/auth\/confirm\/.*/,
             /^\/api\/auth\/email\/reset\/.*/,
             /^\/uploads\/.*/,
-            /^\/socket.io\/.*/
         ]
     });
 }
